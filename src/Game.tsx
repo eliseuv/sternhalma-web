@@ -13,7 +13,7 @@ interface GameProps {
 export function Game({ url, onLeave }: GameProps) {
     console.log("Game rendering", url);
     const [boardState, setBoardState] = useState<Map<string, Player>>(new Map());
-    const [myPlayer, setMyPlayer] = useState<Player | null>(null);
+    const [myPlayer] = useState<Player>('player1');
     const [sessionId, setSessionId] = useState<string | null>(null);
     const [turn, setTurn] = useState<MovementIndices[] | null>(null);
     const [lastMove, setLastMove] = useState<MovementIndices | undefined>(undefined);
@@ -47,15 +47,11 @@ export function Game({ url, onLeave }: GameProps) {
         switch (msg.type) {
             case 'welcome':
                 setSessionId(msg.session_id);
-                setMyPlayer(msg.player);
                 setConnectionError(null);
                 break;
             case 'reject':
                 setConnectionError(`Connection Rejected: ${msg.reason}`);
                 setSessionId(null);
-                break;
-            case 'assign':
-                setMyPlayer(msg.player);
                 break;
             case 'turn':
                 setTurn(msg.movements);
@@ -134,9 +130,9 @@ export function Game({ url, onLeave }: GameProps) {
     };
 
     const formatPlayerName = (name: string) => {
-        if (name === 'player1') return 'Player 1';
-        if (name === 'player2') return 'Player 2';
-        return name.charAt(0).toUpperCase() + name.slice(1);
+        if (name === 'player1') return 'You';
+        if (name === 'player2') return 'Opponent';
+        return name;
     };
 
     const isGameInProgress = scores[0] > 0 || scores[1] > 0 || lastMove !== undefined;
@@ -169,9 +165,6 @@ export function Game({ url, onLeave }: GameProps) {
 
             <div style={{ marginBottom: 10, width: '100%', display: 'flex', justifyContent: 'space-between', padding: '0 20px', boxSizing: 'border-box' }}>
                 <span>Status: <strong style={{ color: connectionError ? '#ef4444' : '#10b981' }}>{gameStatusDisplay}</strong> {connectionError && <span style={{ color: '#ef4444' }}>({connectionError})</span>}</span>
-                {myPlayer && (
-                    <span>You are: <strong style={{ color: myPlayer === 'player1' ? '#8b5cf6' : '#f59e0b' }}>{formatPlayerName(myPlayer)}</strong></span>
-                )}
             </div>
 
             <div style={{ marginBottom: 10, width: '100%', display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '1.2rem' }}>

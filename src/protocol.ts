@@ -23,15 +23,10 @@ export type RemoteOutMessage =
     | {
         type: 'welcome';
         session_id: string;
-        player: Player;
     }
     | {
         type: 'reject';
         reason: string;
-    }
-    | {
-        type: 'assign';
-        player: Player;
     }
     | {
         type: 'disconnect';
