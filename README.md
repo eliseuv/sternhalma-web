@@ -4,6 +4,14 @@ A modern, responsive web client for the Sternhalma (Chinese Checkers) game, buil
 
 This project serves as the frontend interface for the [Sternhalma Server](https://github.com/eliseuv/sternhalma-server).
 
+## Screenshots
+
+<p align="center">
+  <img src="./screenshots/welcome.png" alt="Welcome Screen" width="48%">
+  &nbsp;
+  <img src="./screenshots/game.png" alt="Game Board" width="48%">
+</p>
+
 ## Features
 
 - **Real-time Gameplay**: Connects to the Sternhalma server via WebSocket for instant move updates.
